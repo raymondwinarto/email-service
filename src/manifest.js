@@ -24,7 +24,7 @@ module.exports = new Confidence.Store({
         log: ['error', 'implementation', 'internal'],
         request: ['error', 'implementation', 'internal'],
       },
-      production: {
+      prod: {
         request: ['implementation'],
       },
     },
@@ -53,7 +53,7 @@ module.exports = new Confidence.Store({
             logRequestStart: true,
             logRequestComplete: true,
           },
-          production: {
+          prod: {
             prettyPrint: false,
           },
         },
@@ -70,7 +70,7 @@ module.exports = new Confidence.Store({
         plugin: {
           $filter: { $env: 'NODE_ENV' },
           $default: 'hapi-swagger',
-          production: Toys.noop,
+          prod: Toys.noop,
           testing: Toys.noop,
         },
         options: {
