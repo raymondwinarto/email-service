@@ -3,10 +3,13 @@
   "version": "0.0.1",
   "description": "Email service that provides redundancy when sending email by allowing to failover to alternate Email Provider in the event of failure",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=12.18.0"
+  },
   "scripts": {
     "test": "env NODE_ENV=testing jest",
-    "start": "env NODE_ENV=production node src/index.js",
-    "dev": "env NODE_ENV=development nodemon --inspect=9228 src/index.js"
+    "start": "env NODE_ENV=production PORT=3080 node src/index.js",
+    "dev": "env NODE_ENV=development PORT=3080 nodemon --inspect=9228 src/index.js"
   },
   "author": "Raymond Winarto",
   "license": "ISC",

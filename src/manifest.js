@@ -81,6 +81,9 @@ module.exports = new Confidence.Store({
           schemes: ['http', 'https'],
         },
       },
+      {
+        plugin: './api',
+      },
     ],
   },
 });
