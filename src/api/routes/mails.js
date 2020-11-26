@@ -1,7 +1,7 @@
-const Joi = require('joi');
-
 const { Mails } = require('../handlers');
-const { failAction } = require('../../lib/utils');
+
+const failAction = require('../../lib/utils/fail-action');
+const { mail } = require('../../lib/utils/joi-schemas');
 
 const routes = [
   {
@@ -11,13 +11,7 @@ const routes = [
       description: 'Send an email.',
       tags: ['api'],
       validate: {
-        payload: Joi.object({
-          tos: Joi.array().items(Joi.string().email()).required(),
-          ccs: Joi.array().items(Joi.string().email()),
-          bccs: Joi.array().items(Joi.string().email()),
-          subject: Joi.string().required(),
-          content: Joi.string().required(),
-        }),
+        payload: mail,
         failAction,
       },
     },

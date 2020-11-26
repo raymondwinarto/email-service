@@ -78,6 +78,7 @@ module.exports = new Confidence.Store({
             title: 'Email Service - Api Documentation',
             version: Package.version,
           },
+          definitionPrefix: 'useLabel',
           schemes: ['http', 'https'],
         },
       },
