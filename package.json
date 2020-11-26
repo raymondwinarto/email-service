@@ -1,0 +1,35 @@
+{
+  "name": "email-service",
+  "version": "0.0.1",
+  "description": "Email service that provides redundancy when sending email by allowing to failover to alternate Email Provider in the event of failure",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "env NODE_ENV=testing jest",
+    "start": "env NODE_ENV=production node src/index.js",
+    "dev": "env NODE_ENV=development nodemon --inspect=9228 src/index.js"
+  },
+  "author": "Raymond Winarto",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.0"
+  },
+  "dependencies": {
+    "@hapi/glue": "^8.0.0",
+    "@hapi/hapi": "^20.0.3",
+    "@hapi/inert": "^6.0.3",
+    "@hapi/joi": "^17.1.1",
+    "@hapi/vision": "^6.0.1",
+    "axios": "^0.21.0",
+    "confidence": "^5.0.0",
+    "disinfect": "^1.1.0",
+    "hapi-pino": "^8.3.0",
+    "hapi-swagger": "^14.0.0",
+    "toys": "^2.3.1"
+  }
+}
