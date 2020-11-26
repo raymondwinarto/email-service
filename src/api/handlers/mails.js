@@ -1,6 +1,8 @@
 const handlers = {
   sendEmail(request, h) {
-    return h.response('Test string').code(201);
+    const { payload } = request;
+
+    return h.response(payload).code(201);
   },
 };
 
