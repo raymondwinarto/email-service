@@ -2,24 +2,36 @@ const handlers = {
   async sendEmail(request, h) {
     const { payload, MailProviders } = request;
 
-    // const providers = [...mailProviders].map(({ Service }) => ({ Service, active: false }));
+    const providers = MailProviders.map((Service) => ({ Service, success: false }));
 
-    // const providerSents = providers.reduce(
-    //   async (accum, provider) => {
-    //     const mailProvider = new mailProviders[0].Service(payload);
-    //     const response = await mailProvider.send();
-    //   },
-    //   [...providers]
-    // );
+    // https://stackoverflow.com/questions/41243468/javascript-array-reduce-with-async-await
+    const providersResponse = providers.reduce(async (accumP, provider) => {
+      const accum = await accumP;
+      if (accum.find((pr) => pr.response)) {
+        // there is a successful response, just return
+        return [...accum, { Service: provider.Service }];
+      }
 
-    // // get the response
-    // const succesfulProvider = providerSents.find((sent) => sent.response);
-    // const response = succesfulProvider && succesfulProvider.response;
+      try {
+        const mailProvider = new provider.Service(payload);
+        const response = await mailProvider.send();
 
-    // // set the new active provider
+        const result = [...accum, { Service: provider.Service, response }];
+        return result;
+      } catch (error) {
+        request.logger.error(error);
+        return [...accum, { Service: provider.Service, error }];
+      }
+    }, Promise.resolve([]));
 
-    const mailProvider = new MailProviders[0](payload);
-    const response = await mailProvider.send();
+    // get the response
+    const rsp = await providersResponse;
+    const succesfulProvider = rsp.find((pr) => pr.response);
+    const response = succesfulProvider && succesfulProvider.response;
+
+    // set the new active provider
+    const newMailProviders = rsp.sort((a) => (a.response ? -1 : 0)).map((pr) => pr.Service);
+    request.MailProviders = newMailProviders;
 
     return h.response(response ? { sent: true } : { sent: false }).code(201);
   },
