@@ -10,17 +10,9 @@ exports.plugin = {
   register: async (server) => {
     server.route([...routes]);
 
-    const mailProviders = [
-      {
-        Service: SendGrid,
-        active: true,
-      },
-      {
-        Service: MailGun,
-        active: false,
-      },
-    ];
+    // first in the array will be the first attempt
+    const MailProviders = [SendGrid, MailGun];
 
-    server.decorate('request', 'mailProviders', mailProviders);
+    server.decorate('request', 'MailProviders', MailProviders);
   },
 };
