@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
   },
 });
 
-class SendGridMail {
+class SendGrid {
   constructor({ tos, ccs, bccs, subject, content }) {
     this.tos = tos;
     this.ccs = ccs;
@@ -62,4 +62,4 @@ class SendGridMail {
   }
 }
 
-module.exports = SendGridMail;
+module.exports = SendGrid;
