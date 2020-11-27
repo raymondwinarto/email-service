@@ -1,3 +1,6 @@
+const SendGrid = require('../lib/mails/send-grid');
+const MailGun = require('../lib/mails/mail-gun');
+
 const routes = require('./routes');
 
 exports.plugin = {
@@ -6,5 +9,18 @@ exports.plugin = {
 
   register: async (server) => {
     server.route([...routes]);
+
+    const mailProviders = [
+      {
+        Service: SendGrid,
+        active: true,
+      },
+      {
+        Service: MailGun,
+        active: false,
+      },
+    ];
+
+    server.decorate('request', 'mailProviders', mailProviders);
   },
 };

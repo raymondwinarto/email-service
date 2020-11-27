@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const MailProvider = require('./mail-provider');
+
 const { SENDGRID_API_KEY, SENDGRID_API_BASE_URL } = process.env;
 
 const axiosInstance = axios.create({
@@ -11,15 +13,7 @@ const axiosInstance = axios.create({
   },
 });
 
-class SendGrid {
-  constructor({ tos, ccs, bccs, subject, content }) {
-    this.tos = tos;
-    this.ccs = ccs;
-    this.bccs = bccs;
-    this.subject = subject;
-    this.content = content;
-  }
-
+class SendGrid extends MailProvider {
   async send() {
     const to = this.tos.map((email) => ({ email }));
 
@@ -31,7 +25,7 @@ class SendGrid {
           },
         ],
         from: {
-          email: 'raymondandwork@gmail.com',
+          email: 'Raymond SendGrid Service <raymondandwork@gmail.com>',
         },
         subject: this.subject,
         content: [

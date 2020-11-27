@@ -1,5 +1,7 @@
-const FormData = require('form-data');
 const axios = require('axios');
+const FormData = require('form-data');
+
+const MailProvider = require('./mail-provider');
 
 const { MAILGUN_API_KEY, MAILGUN_API_BASE_URL } = process.env;
 
@@ -15,20 +17,12 @@ const axiosInstance = axios.create({
   },
 });
 
-class MailGun {
-  constructor({ tos, ccs, bccs, subject, content }) {
-    this.tos = tos;
-    this.ccs = ccs;
-    this.bccs = bccs;
-    this.subject = subject;
-    this.content = content;
-  }
-
+class MailGun extends MailProvider {
   async send() {
     try {
       const form = new FormData();
 
-      form.append('from', 'raymond@sandbox4df00f20e1aa4995b2b54395c62ee0df.mailgun.org');
+      form.append('from', 'Raymond MailGun Service <raymondandwork@gmail.com>');
       form.append('subject', this.subject);
       form.append('text', this.content);
 
