@@ -1,8 +1,13 @@
+const SendGridMail = require('../../lib/mails/send-grid-mail');
+
 const handlers = {
-  sendEmail(request, h) {
+  async sendEmail(request, h) {
     const { payload } = request;
 
-    return h.response(payload).code(201);
+    const sendGridMail = new SendGridMail(payload);
+    const response = await sendGridMail.send();
+
+    return h.response(response ? { sent: true } : { sent: false }).code(201);
   },
 };
 
