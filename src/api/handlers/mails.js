@@ -1,39 +1,51 @@
+const Boom = require('@hapi/boom');
+
 const handlers = {
   async sendEmail(request, h) {
     const { payload, MailProviders } = request;
 
-    const providers = MailProviders.map((Service) => ({ Service, success: false }));
+    let response;
+    const nextMailProviders = [];
 
-    // https://stackoverflow.com/questions/41243468/javascript-array-reduce-with-async-await
-    const providersResponse = providers.reduce(async (accumP, provider) => {
-      const accum = await accumP;
-      if (accum.find((pr) => pr.response)) {
-        // there is a successful response, just return
-        return [...accum, { Service: provider.Service }];
+    // airbnb eslint disallow us to do an await inside for loop
+    // from research - it seems very rare for us needing to do sequential
+    // async/await loop - often we can go with await Promise.all
+    // of the await Promise call and use filter/reduce against
+    // the result not the promises
+    // see https://zellwk.com/blog/async-await-in-loops/ - Key Takeways section at the end
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const MailProvider of MailProviders) {
+      if (!response) {
+        try {
+          const mailProvider = new MailProvider(payload, request.logger);
+          // eslint-disable-next-line no-await-in-loop
+          response = await mailProvider.send();
+
+          nextMailProviders.push({ MailProvider, success: true });
+        } catch (error) {
+          request.logger.error('Error posting request to Mail Provider', error);
+          nextMailProviders.push({ MailProvider, success: false });
+        }
       }
+      nextMailProviders.push({ MailProvider, success: false });
+    }
 
-      try {
-        const mailProvider = new provider.Service(payload);
-        const response = await mailProvider.send();
+    if (!response) {
+      // Error can be due to
+      // - non 2XX status code was returned by Mail Provider
+      // - or Request was sent but no response was received from Mail Provider
+      // - or config error such as invalid API_KEY
+      // however, we don't want to expose the error details to the API
+      // consumer - have logged the error in the above catch block
+      throw Boom.serverUnavailable('Mail Provider Service Unavailable');
+    }
 
-        const result = [...accum, { Service: provider.Service, response }];
-        return result;
-      } catch (error) {
-        request.logger.error(error);
-        return [...accum, { Service: provider.Service, error }];
-      }
-    }, Promise.resolve([]));
+    request.MailProviders = nextMailProviders
+      .sort((a) => (a.success ? -1 : 0))
+      .map((mailProvider) => mailProvider.MailProvider);
 
-    // get the response
-    const rsp = await providersResponse;
-    const succesfulProvider = rsp.find((pr) => pr.response);
-    const response = succesfulProvider && succesfulProvider.response;
-
-    // set the new active provider
-    const newMailProviders = rsp.sort((a) => (a.response ? -1 : 0)).map((pr) => pr.Service);
-    request.MailProviders = newMailProviders;
-
-    return h.response(response ? { sent: true } : { sent: false }).code(201);
+    return h.response(response).code(201);
   },
 };
 

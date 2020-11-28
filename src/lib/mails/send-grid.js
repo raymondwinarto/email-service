@@ -17,7 +17,6 @@ class SendGrid extends MailProvider {
   async send() {
     const to = this.tos.map((email) => ({ email }));
 
-    // try {
     const response = await axiosInstance.post('/v3/mail/send', {
       personalizations: [
         {
@@ -36,23 +35,12 @@ class SendGrid extends MailProvider {
       ],
     });
 
-    return response.status === 202;
-    // } catch (error) {
-    //   if (error.response) {
-    //     // The request was made and the server responded with a status code
-    //     // that falls out of the range of 2xx
-    //     return error.response.status;
-    //   }
+    // 200 OK - Valid message but not queued (can only happened in Sandbox mode)
+    // 204 ACCEPTED - Valid message and queued to be delivered
+    if (response.status === 202) return { status: 'queued' };
 
-    //   if (error.request) {
-    //     // The request was made but no response was received
-    //     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-    //     // http.ClientRequest in node.js
-    //     return error.request;
-    //   }
-
-    //   return error.config;
-    // }
+    this.logger.warn('Email is valid but not queued in Sandgrid (Sandbox mode)');
+    return { status: 'ok' };
   }
 }
 

@@ -19,35 +19,21 @@ const axiosInstance = axios.create({
 
 class MailGun extends MailProvider {
   async send() {
-    try {
-      const form = new FormData();
+    const form = new FormData();
 
-      form.append('from', 'Raymond MailGun Service <raymondandwork@gmail.com>');
-      form.append('subject', this.subject);
-      form.append('text', this.content);
+    form.append('from', 'Raymond MailGun Service <raymondandwork@gmail.com>');
+    form.append('subject', this.subject);
+    form.append('text', this.content);
 
-      this.tos.forEach((email) => {
-        form.append('to', email);
-      });
+    this.tos.forEach((email) => {
+      form.append('to', email);
+    });
 
-      const response = await axiosInstance.post('/messages', form, { headers: form.getHeaders() });
-      return response.status === 200;
-    } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        return error.response.status;
-      }
+    // We don't need response because axios will throw error when response is not 2XX
+    await axiosInstance.post('/messages', form, { headers: form.getHeaders() });
 
-      if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        return error.request;
-      }
-
-      return error.config;
-    }
+    // TODO: is there any other possible 2XX response code?
+    return { status: 'queued' };
   }
 }
 
