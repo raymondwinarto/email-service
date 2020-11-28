@@ -13,6 +13,6 @@ exports.plugin = {
     // first in the array will be the first attempt
     const MailProviders = [SendGrid, MailGun];
 
-    server.decorate('request', 'MailProviders', MailProviders);
+    server.decorate('server', 'MailProviders', MailProviders);
   },
 };

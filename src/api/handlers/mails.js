@@ -2,7 +2,8 @@ const Boom = require('@hapi/boom');
 
 const handlers = {
   async sendEmail(request, h) {
-    const { payload, MailProviders } = request;
+    const { payload, server } = request;
+    const { MailProviders } = server;
 
     let response;
     const nextMailProviders = [];
@@ -16,7 +17,10 @@ const handlers = {
 
     // eslint-disable-next-line no-restricted-syntax
     for (const MailProvider of MailProviders) {
-      if (!response) {
+      if (response) {
+        // we have a successful call to one of the mailProvider - just add to the array
+        nextMailProviders.push({ MailProvider, success: false });
+      } else {
         try {
           const mailProvider = new MailProvider(payload, request.logger);
           // eslint-disable-next-line no-await-in-loop
@@ -24,11 +28,11 @@ const handlers = {
 
           nextMailProviders.push({ MailProvider, success: true });
         } catch (error) {
-          request.logger.error('Error posting request to Mail Provider', error);
+          request.logger.error('Error posting request to Mail Provider');
+          request.logger.error(error);
           nextMailProviders.push({ MailProvider, success: false });
         }
       }
-      nextMailProviders.push({ MailProvider, success: false });
     }
 
     if (!response) {
@@ -41,7 +45,10 @@ const handlers = {
       throw Boom.serverUnavailable('Mail Provider Service Unavailable');
     }
 
-    request.MailProviders = nextMailProviders
+    // We use the order of item in the MailProviders array to determine
+    // which mail provider will be used first - so here we sort the array
+    // by the last successful provider
+    request.server.MailProviders = nextMailProviders
       .sort((a) => (a.success ? -1 : 0))
       .map((mailProvider) => mailProvider.MailProvider);
 
