@@ -13,7 +13,7 @@ const handlers = {
     // async/await loop - often we can go with await Promise.all
     // of the await Promise call and use filter/reduce against
     // the result not the promises
-    // see https://zellwk.com/blog/async-await-in-loops/ - Key Takeways section at the end
+    // see https://zellwk.com/blog/async-await-in-loops/ - "Key Takeways" section at the end
 
     // eslint-disable-next-line no-restricted-syntax
     for (const MailProvider of MailProviders) {
