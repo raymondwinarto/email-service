@@ -18,7 +18,6 @@ class SendGrid extends MailProvider {
     const to = this.tos.map((email) => ({ email }));
     const cc = this.ccs && this.ccs.map((email) => ({ email }));
     const bcc = this.bccs && this.bccs.map((email) => ({ email }));
-    // TODO: cc and bcc
 
     const response = await axiosInstance.post('/v3/mail/send', {
       personalizations: [
