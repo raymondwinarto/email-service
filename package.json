@@ -9,7 +9,8 @@
   "scripts": {
     "test": "jest",
     "start": "NODE_ENV=prod node -r dotenv/config src/index.js dotenv_config_path=./.env",
-    "dev": "NODE_ENV=dev nodemon --inspect=9228 -r dotenv/config src/index.js dotenv_config_path=./.env"
+    "dev": "NODE_ENV=dev nodemon --inspect=9228 -r dotenv/config src/index.js dotenv_config_path=./.env",
+    "deploy:heroku": "git push heroku master"
   },
   "author": "Raymond Winarto",
   "license": "ISC",

@@ -43,7 +43,7 @@ module.exports = new Confidence.Store({
         plugin: {
           $filter: { $env: 'NODE_ENV' },
           $default: 'hapi-pino',
-          testing: Toys.noop,
+          test: Toys.noop,
         },
         options: {
           $filter: { $env: 'NODE_ENV' },
@@ -71,15 +71,21 @@ module.exports = new Confidence.Store({
           $filter: { $env: 'NODE_ENV' },
           $default: 'hapi-swagger',
           prod: Toys.noop,
-          testing: Toys.noop,
+          test: Toys.noop,
         },
         options: {
-          info: {
-            title: 'Email Service - Api Documentation',
-            version: Package.version,
+          $filter: { $env: 'NODE_ENV' },
+          $default: {
+            info: {
+              title: 'Email Service - Api Documentation',
+              version: Package.version,
+            },
+            definitionPrefix: 'useLabel',
+            schemes: ['https'],
           },
-          definitionPrefix: 'useLabel',
-          schemes: ['http', 'https'],
+          dev: {
+            schemes: ['http'],
+          },
         },
       },
       {

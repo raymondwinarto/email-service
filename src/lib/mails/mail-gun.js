@@ -29,6 +29,8 @@ class MailGun extends MailProvider {
       form.append('to', email);
     });
 
+    // TODO: bcc and cc
+
     // We don't need response because axios will throw error when response is not 2XX
     await axiosInstance.post('/messages', form, { headers: form.getHeaders() });
 
