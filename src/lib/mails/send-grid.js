@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const MailProvider = require('./mail-provider');
+const { SEND_OK_STATUS, SEND_QUEUED_STATUS, HTTP_ACCEPTED_CODE } = require('../../constants');
 
 const { SENDGRID_API_KEY, SENDGRID_API_BASE_URL } = process.env;
 
@@ -27,7 +28,7 @@ class SendGrid extends MailProvider {
         },
       ],
       from: {
-        email: this.FROM,
+        email: this.from,
       },
       subject: this.subject,
       content: [
@@ -40,10 +41,10 @@ class SendGrid extends MailProvider {
 
     // 200 OK - valid message but not queued (can only happened in Sandbox mode)
     // 202 ACCEPTED - valid message and queued to be delivered
-    if (response.status === this.ACCEPTED_HTTP_CODE) return { status: this.QUEUE_STATUS };
+    if (response.status === HTTP_ACCEPTED_CODE) return { status: SEND_QUEUED_STATUS };
 
     this.logger.warn('Email is valid but not queued in SandGrid (Sandbox mode).');
-    return { status: this.OK_STATUS };
+    return { status: SEND_OK_STATUS };
   }
 }
 

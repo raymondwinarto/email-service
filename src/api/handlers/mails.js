@@ -1,5 +1,7 @@
 const Boom = require('@hapi/boom');
 
+const { SEND_QUEUED_STATUS } = require('../../constants');
+
 const handlers = {
   async sendEmail(request, h) {
     const { payload, server } = request;
@@ -50,9 +52,10 @@ const handlers = {
         ]
       : MailProviders;
 
-    if (response.status === 'queued') {
+    if (response.status === SEND_QUEUED_STATUS) {
       return h.response(response).code(202);
     }
+
     return h.response(response).code(200);
   },
 };
