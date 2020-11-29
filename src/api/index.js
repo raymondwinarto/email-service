@@ -11,6 +11,8 @@ exports.plugin = {
     server.route([...routes]);
 
     // first in the array will be the first attempt
+    // more mail providers can be added to the array below
+    // without having to change failover logic
     const MailProviders = [SendGrid, MailGun];
 
     server.decorate('server', 'MailProviders', MailProviders);

@@ -21,7 +21,7 @@ class MailGun extends MailProvider {
   async send() {
     const form = new FormData();
 
-    form.append('from', 'Raymond MailGun Service <raymondandwork@gmail.com>');
+    form.append('from', this.from);
     form.append('subject', this.subject);
     form.append('text', this.content);
 
@@ -29,7 +29,17 @@ class MailGun extends MailProvider {
       form.append('to', email);
     });
 
-    // TODO: bcc and cc
+    if (this.ccs) {
+      this.ccs.forEach((email) => {
+        form.append('cc', email);
+      });
+    }
+
+    if (this.bccs) {
+      this.bccs.forEach((email) => {
+        form.append('bcc', email);
+      });
+    }
 
     // We don't need response because axios will throw error when response is not 2XX
     await axiosInstance.post('/messages', form, { headers: form.getHeaders() });
