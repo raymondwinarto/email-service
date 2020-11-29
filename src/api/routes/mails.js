@@ -1,8 +1,7 @@
-const Joi = require('joi');
 const { Mails } = require('../handlers');
 
 const failAction = require('../../lib/utils/fail-action');
-const { mail } = require('../../lib/utils/joi-schemas');
+const { mail, mailAccepted, mailOk } = require('../../lib/utils/joi-schemas');
 
 const routes = [
   {
@@ -17,12 +16,8 @@ const routes = [
       },
       response: {
         status: {
-          202: Joi.object({
-            status: Joi.string().valid('queued'),
-          }).label('accepted'),
-          200: Joi.object({
-            status: Joi.string().valid('ok'),
-          }).label('ok'),
+          202: mailAccepted,
+          200: mailOk,
         },
       },
     },
