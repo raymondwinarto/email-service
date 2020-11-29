@@ -49,12 +49,14 @@ module.exports = new Confidence.Store({
           $filter: { $env: 'NODE_ENV' },
           $default: {
             logPayload: true,
-            prettyPrint: { colorize: true, translateTime: true },
+            // when false, log is in json - can easily be parsed by log analysis tool
+            // such as splunk, newRelic, cloudWatch, etcnpm
+            prettyPrint: false,
             logRequestStart: true,
             logRequestComplete: true,
           },
-          prod: {
-            prettyPrint: false,
+          dev: {
+            prettyPrint: { colorize: true, translateTime: true },
           },
         },
       },
@@ -67,6 +69,9 @@ module.exports = new Confidence.Store({
         },
       },
       {
+        // swagger is disabled in prod and test
+        // prod: this service  is not a public API - no need swagger
+        // test: is used by jest - no need for swagger
         plugin: {
           $filter: { $env: 'NODE_ENV' },
           $default: 'hapi-swagger',
@@ -84,6 +89,7 @@ module.exports = new Confidence.Store({
             schemes: ['https'],
           },
           dev: {
+            // dev environment is not running on https
             schemes: ['http'],
           },
         },

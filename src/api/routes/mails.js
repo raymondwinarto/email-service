@@ -8,7 +8,7 @@ const routes = [
     method: 'POST',
     path: '/mails',
     options: {
-      description: 'Send an email.',
+      description: 'Route to send an email via one of mail providers.',
       tags: ['api'],
       validate: {
         payload: mail,

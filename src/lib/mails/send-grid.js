@@ -39,8 +39,8 @@ class SendGrid extends MailProvider {
       ],
     });
 
-    // 200 OK - Valid message but not queued (can only happened in Sandbox mode)
-    // 204 ACCEPTED - Valid message and queued to be delivered
+    // 200 OK - valid message but not queued (can only happened in Sandbox mode)
+    // 204 ACCEPTED - valid message and queued to be delivered
     if (response.status === 202) return { status: 'queued' };
 
     this.logger.warn('Email is valid but not queued in Sandgrid (Sandbox mode)');
