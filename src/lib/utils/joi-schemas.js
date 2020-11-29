@@ -16,17 +16,17 @@ const mail = Joi.object({
     .example('Dear Sir/Madam,\n\nThere is a problem in sending email.\n\nRegards,\n\nPerson'),
 }).label('mail');
 
-const mailAcceptedResponse = Joi.object({
+const mailAccepted = Joi.object({
   status: Joi.string().valid('queued'),
 }).label('accepted');
 
-const mailOkResponse = Joi.object({
+const mailOk = Joi.object({
   status: Joi.string().valid('ok'),
 }).label('ok');
 
 module.exports = {
   emailAddress,
   mail,
-  mailAcceptedResponse,
-  mailOkResponse,
+  mailAccepted,
+  mailOk,
 };

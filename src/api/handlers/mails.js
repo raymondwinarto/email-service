@@ -45,18 +45,16 @@ const handlers = {
     // We use the order of item in the MailProviders array to determine
     // which mail provider will be used first - so here we put the last successful
     // mail provider first in the array for the next request
-    request.server.MailProviders = successfulProvider
-      ? [
-          successfulProvider,
-          MailProviders.filter((mailProvider) => mailProvider !== successfulProvider),
-        ]
-      : MailProviders;
+    request.server.MailProviders = [
+      successfulProvider,
+      MailProviders.filter((mailProvider) => mailProvider !== successfulProvider),
+    ];
 
     if (response.status === SEND_QUEUED_STATUS) {
       return h.response(response).code(202);
     }
 
-    return h.response(response).code(200);
+    throw Boom.serverUnavailable('Mail Provider Service Unavailable');
   },
 };
 
