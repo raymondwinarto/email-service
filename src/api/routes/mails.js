@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const { Mails } = require('../handlers');
 
 const failAction = require('../../lib/utils/fail-action');
@@ -13,6 +14,16 @@ const routes = [
       validate: {
         payload: mail,
         failAction,
+      },
+      response: {
+        status: {
+          202: Joi.object({
+            status: Joi.string().valid('queued'),
+          }).label('accepted'),
+          200: Joi.object({
+            status: Joi.string().valid('ok'),
+          }).label('ok'),
+        },
       },
     },
     handler: Mails.sendEmail,

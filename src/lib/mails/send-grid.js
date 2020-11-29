@@ -6,7 +6,6 @@ const { SENDGRID_API_KEY, SENDGRID_API_BASE_URL } = process.env;
 
 const axiosInstance = axios.create({
   baseURL: SENDGRID_API_BASE_URL,
-  timeout: 20000,
   headers: {
     Authorization: `Bearer ${SENDGRID_API_KEY}`,
     'Content-Type': 'application/json',
@@ -28,7 +27,7 @@ class SendGrid extends MailProvider {
         },
       ],
       from: {
-        email: this.from,
+        email: this.FROM,
       },
       subject: this.subject,
       content: [
@@ -40,11 +39,11 @@ class SendGrid extends MailProvider {
     });
 
     // 200 OK - valid message but not queued (can only happened in Sandbox mode)
-    // 204 ACCEPTED - valid message and queued to be delivered
-    if (response.status === 202) return { status: 'queued' };
+    // 202 ACCEPTED - valid message and queued to be delivered
+    if (response.status === this.ACCEPTED_HTTP_CODE) return { status: this.QUEUE_STATUS };
 
-    this.logger.warn('Email is valid but not queued in Sandgrid (Sandbox mode)');
-    return { status: 'ok' };
+    this.logger.warn('Email is valid but not queued in SandGrid (Sandbox mode).');
+    return { status: this.OK_STATUS };
   }
 }
 

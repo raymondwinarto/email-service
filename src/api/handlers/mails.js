@@ -6,7 +6,7 @@ const handlers = {
     const { MailProviders } = server;
 
     let response;
-    const nextMailProviders = [];
+    let successfulProvider;
 
     // airbnb eslint disallow us to do an await inside for loop
     // from research - it seems very rare for us needing to do sequential
@@ -17,21 +17,16 @@ const handlers = {
 
     // eslint-disable-next-line no-restricted-syntax
     for (const MailProvider of MailProviders) {
-      if (response) {
-        // we have a successful call to one of the mailProvider - just add to the array
-        nextMailProviders.push({ MailProvider, success: false });
-      } else {
-        try {
-          const mailProvider = new MailProvider(payload, request.logger);
-          // eslint-disable-next-line no-await-in-loop
-          response = await mailProvider.send();
+      try {
+        const mailProvider = new MailProvider(payload, request.logger);
 
-          nextMailProviders.push({ MailProvider, success: true });
-        } catch (error) {
-          request.logger.error('Error posting request to Mail Provider');
-          request.logger.error(error);
-          nextMailProviders.push({ MailProvider, success: false });
-        }
+        // eslint-disable-next-line no-await-in-loop
+        response = await mailProvider.send();
+        successfulProvider = MailProvider;
+        break;
+      } catch (error) {
+        request.logger.error('Error posting request to Mail Provider');
+        request.logger.error(error);
       }
     }
 
@@ -46,13 +41,19 @@ const handlers = {
     }
 
     // We use the order of item in the MailProviders array to determine
-    // which mail provider will be used first - so here we sort the array
-    // by the last successful provider
-    request.server.MailProviders = nextMailProviders
-      .sort((a) => (a.success ? -1 : 0))
-      .map((mailProvider) => mailProvider.MailProvider);
+    // which mail provider will be used first - so here we put the last successful
+    // mail provider first in the array for the next request
+    request.server.MailProviders = successfulProvider
+      ? [
+          successfulProvider,
+          MailProviders.filter((mailProvider) => mailProvider !== successfulProvider),
+        ]
+      : MailProviders;
 
-    return h.response(response).code(201);
+    if (response.status === 'queued') {
+      return h.response(response).code(202);
+    }
+    return h.response(response).code(200);
   },
 };
 
