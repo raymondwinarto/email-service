@@ -61,14 +61,6 @@ module.exports = new Confidence.Store({
           },
         },
       },
-      // {
-      //   plugin: 'disinfect',
-      //   options: {
-      //     disinfectQuery: true,
-      //     disinfectParams: true,
-      //     disinfectPayload: true,
-      //   },
-      // },
       {
         // swagger is disabled in prod and test
         // prod: this service  is not a public API - no need swagger
