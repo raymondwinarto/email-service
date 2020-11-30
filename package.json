@@ -1,7 +1,7 @@
 {
   "name": "email-service",
   "version": "0.0.1",
-  "description": "Email service that provides redundancy when sending email by allowing to failover to alternate Email Provider in the event of failure",
+  "description": "Email service that supports redundancy when sending email by allowing to failover to alternate Email Provider in the event of failure",
   "main": "src/index.js",
   "engines": {
     "node": ">=12.18.0"
