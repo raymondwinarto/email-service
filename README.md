@@ -2,7 +2,7 @@
 
 ## About
 
-This Email Service provides an abstractioni between two different email service providers (SendGrid and MailGun). When the current active provider goes down, this Email Service will quickly failover to the second provider.
+This Email Service provides an abstraction layer to send email between two different email service providers (SendGrid and MailGun). When the current active provider goes down, this Email Service will quickly failover to the second provider.
 
 ## Service Features and Limitations
 
