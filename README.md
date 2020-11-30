@@ -42,6 +42,8 @@ This Email Service provides an abstractioni between two different email service 
 - To run application for development - run `npm run dev`
 - Local endpoint: http://localhost:3080/mails
 - Swagger: http://localhost:3080/documentation
+- Note:
+  - To test the failover to `MailGun`, make `SendGrid` API_KEY incorrect.
 
 ## Deployment to Heroku
 
