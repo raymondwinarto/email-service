@@ -19,16 +19,7 @@ module.exports = new Confidence.Store({
         },
       },
     },
-    debug: {
-      $filter: { $env: 'NODE_ENV' },
-      $default: {
-        log: ['error', 'implementation', 'internal'],
-        request: ['error', 'implementation', 'internal'],
-      },
-      prod: {
-        request: ['implementation'],
-      },
-    },
+    debug: false,
   },
   register: {
     plugins: [
@@ -51,7 +42,7 @@ module.exports = new Confidence.Store({
           $default: {
             logPayload: true,
             // when false, log is in json - can easily be parsed by log analysis tool
-            // such as splunk, newRelic, cloudWatch, etcnpm
+            // such as splunk, newRelic, cloudWatch, etc
             prettyPrint: false,
             logRequestStart: true,
             logRequestComplete: true,
