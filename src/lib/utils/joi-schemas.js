@@ -16,7 +16,7 @@ const mail = Joi.object({
   content: Joi.string()
     .required()
     .description('email text/plain content')
-    .example('Dear Sir/Madam,\n\nYour loan is conditionally approved.\n\nRegards,\n\nJohn Smith'),
+    .example('Dear Sir, Your loan is conditionally approved. Regards, John Smith'),
 }).label('mail');
 
 const mailAccepted = Joi.object({
