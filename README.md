@@ -49,7 +49,7 @@ This Email Service provides an abstraction layer to send email between two diffe
     - inspector is available - vs code debugger can be used
   - `npm start` will run as `prod` environment
     - payload validation will not contain the detail validation error, only showing 400 Bad Request
-    - log will not be printed with easy to read format
+    - log will not be printed with easy to read format to allow easy parsing (in JSON)
 
 ## Deployment to Heroku
 
