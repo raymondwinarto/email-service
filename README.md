@@ -15,14 +15,13 @@ This Email Service provides an abstractioni between two different email service 
 
 - Endpoint: https://shielded-thicket-89980.herokuapp.com/mails
 - Documentation: https://shielded-thicket-89980.herokuapp.com/documentation
-
-* Environment level: `staging`
-* The API can be tested directly via Swagger.
-* or use the following sample curl that can be imported into Postman
+- Environment level: `staging`
+- The API can be tested directly via Swagger.
+- or use the following sample curl that can be imported into Postman
   ```
   curl -X POST "https://shielded-thicket-89980.herokuapp.com/mails" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{ \"tos\": [ \"email1@example.com\" ], \"subject\": \"RE: Your Loan Application\", \"content\": \"Dear Sir, Your loan is conditionally approved. Regards, John Smith\"}"
   ```
-* **Note:**
+- **Note:**
   - On application start `SendGrid` will be set as the primary/default.
   - With `SendGrid`, when sending emails to `gmail` or `yahoo`, emails were successfully delivered although sometimes they can be in Junk Mail folder, however, `hotmail` rejected the email altogether (marked as Blocked).
   - To test `MailGun` on this Heroku app, please let me know - I will need to make `SendGrid` API_KEY invalid.
