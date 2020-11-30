@@ -2,7 +2,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 
 const MailProvider = require('./mail-provider');
-const { SEND_OK_STATUS, SEND_QUEUED_STATUS, HTTP_OK_CODE } = require('../../constants');
+const { HTTP_OK_CODE } = require('../../constants');
 
 const { MAILGUN_API_KEY, MAILGUN_API_BASE_URL } = process.env;
 
@@ -43,13 +43,14 @@ class MailGun extends MailProvider {
 
     const response = await axiosInstance.post('/messages', form, { headers: form.getHeaders() });
 
-    if (response.status === HTTP_OK_CODE) return { status: SEND_QUEUED_STATUS };
+    // MailGun returns 200 OK to say that everything is ok, email is queued for sending
+    if (response.status === HTTP_OK_CODE) return response;
 
     // MailGun only specifies one 2XX code which is 200 and we want to be sure
     // that status queued is for status 200 and axios will throw other non 2XX responses
-    // however, we need to have "consistent return" on a method, so warn and keep the next return
-    this.logger.warn('MailGun is not throwing error but not returning 200.');
-    return { status: SEND_OK_STATUS };
+    // however, we need to do something in case response status is 2XX other than 200
+    // we should consider this as error since email will not be sent
+    throw new Error('MailGun Error: 2XX is return but not 200.');
   }
 }
 

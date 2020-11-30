@@ -10,7 +10,7 @@ const handlers = {
     let response;
     let successfulProvider;
 
-    // airbnb eslint disallow us to do an await inside for loop
+    // airbnb eslint disallow await inside "for loop"
     // from research - it seems very rare for us needing to do sequential
     // async/await loop - often we can go with await Promise.all
     // of the await Promise call and use filter/reduce against
@@ -50,11 +50,7 @@ const handlers = {
       MailProviders.filter((mailProvider) => mailProvider !== successfulProvider),
     ];
 
-    if (response.status === SEND_QUEUED_STATUS) {
-      return h.response(response).code(202);
-    }
-
-    throw Boom.serverUnavailable('Mail Provider Service Unavailable');
+    return h.response({ status: SEND_QUEUED_STATUS }).code(202);
   },
 };
 
