@@ -31,6 +31,33 @@ This Email Service provides an abstractioni between two different email service 
 
 - Clone repository (assuming Git is already installed on the machine).
 - Run `npm install` (assuming Node and NPM are already installed on the machine).
+- Create `.env` file on the project root with the following variables
+  ```
+  PORT=3080
+  SENDGRID_API_BASE_URL=https://api.sendgrid.com/
+  SENDGRID_API_KEY=<your-sendgrid-api-key>
+  MAILGUN_API_BASE_URL=https://api.mailgun.net/v3/sandbox4df00f20e1aa4995b2b54395c62ee0df.mailgun.org/
+  MAILGUN_API_KEY=<your-mailgun-api-key>
+  ```
 - To run application for development - run `npm run dev`
 - Local endpoint: http://localhost:3080/mails
 - Swagger: http://localhost:3080/documentation
+
+## Deployment to Heroku
+
+### Create and Configure Heroku app
+
+- Install Git
+- Clone repository
+- Install `heroku CLI` - https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+- Run `heroku login -i` - enter your username and password
+- Run `heroku create`
+- Set environment variables by running the following `heroku CLI` commands
+  ```
+  heroku config:set NODE_ENV=staging
+  heroku config:set SENDGRID_API_BASE_URL=https://api.sendgrid.com/
+  heroku config:set SENDGRID_API_KEY=<your-sendgrid-api-key>
+  heroku config:set MAILGUN_API_BASE_URL=https://api.mailgun.net/v3/sandbox4df00f20e1aa4995b2b54395c62ee0df.mailgun.org/
+  heroku config:set MAILGUN_API_KEY=<your-mailgun-api-key>
+  ```
+- To check `heroku` environment variables run `heroku config`
