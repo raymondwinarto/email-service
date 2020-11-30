@@ -12,6 +12,7 @@ module.exports = new Confidence.Store({
       response: {
         emptyStatusCode: 200,
       },
+      security: true,
       validate: {
         options: {
           abortEarly: false,
@@ -60,14 +61,14 @@ module.exports = new Confidence.Store({
           },
         },
       },
-      {
-        plugin: 'disinfect',
-        options: {
-          disinfectQuery: true,
-          disinfectParams: true,
-          disinfectPayload: true,
-        },
-      },
+      // {
+      //   plugin: 'disinfect',
+      //   options: {
+      //     disinfectQuery: true,
+      //     disinfectParams: true,
+      //     disinfectPayload: true,
+      //   },
+      // },
       {
         // swagger is disabled in prod and test
         // prod: this service  is not a public API - no need swagger
