@@ -44,6 +44,12 @@ This Email Service provides an abstraction layer to send email between two diffe
 - Swagger: http://localhost:3080/documentation
 - Note:
   - To test the failover to `MailGun`, make `SendGrid` API_KEY incorrect.
+  - `npm run dev` will run as `dev` environment
+    - application will auto-restart when code changes are saved
+    - inspector is available - vs code debugger can be used
+  - `npm start` will run as `prod` environment
+    - payload validation will not contain the detail validation error, only showing 400 Bad Request
+    - log will not be printed with easy to read format
 
 ## Deployment to Heroku
 
