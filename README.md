@@ -69,3 +69,13 @@ This Email Service provides an abstraction layer to send email between two diffe
 ```
 npm run deploy:heroku
 ```
+
+## Security
+
+HapiJs has built in security features that are enabled on this project https://hapi.dev/api/?v=20.0.3#-routeoptionssecurity - following are some that they cover:
+
+- `hsts` - controls the 'Strict-Transport-Security' header - default: `max-age=15768000`
+- `xframe` - controls the 'X-Frame-Options' header - default: `deny`
+- `xss` - controls the 'X-XSS-PROTECTION' header - default: `'1; mode=block'`
+- `noSniff` - control the 'X-Content-Type-Options' header - default: `'nosniff'`
+- and some more
