@@ -61,3 +61,9 @@ This Email Service provides an abstractioni between two different email service 
   heroku config:set MAILGUN_API_KEY=<your-mailgun-api-key>
   ```
 - To check `heroku` environment variables run `heroku config`
+
+### Deploying to Heroku
+
+```
+npm run deploy:heroku
+```
