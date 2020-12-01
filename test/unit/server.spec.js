@@ -1,8 +1,8 @@
 const Glue = require('@hapi/glue');
-const server = require('../src/server');
+const server = require('../../src/server');
 
 jest.mock('@hapi/glue');
-jest.mock('../src/manifest', () => {
+jest.mock('../../src/manifest', () => {
   return {
     get: () => 'mock manifest',
   };
