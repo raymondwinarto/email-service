@@ -2,7 +2,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 
 const MailProvider = require('./mail-provider');
-const { HTTP_OK_CODE } = require('../../constants');
+const { HTTP_OK_CODE, ERRORS } = require('../../constants');
 
 const { MAILGUN_API_KEY, MAILGUN_API_BASE_URL } = process.env;
 
@@ -19,6 +19,10 @@ const axiosInstance = axios.create({
 
 class MailGun extends MailProvider {
   async send() {
+    if (!this.isTotalRecipientsAllowed) {
+      throw new Error(ERRORS.RECIPIENT_LIMIT);
+    }
+
     const form = new FormData();
 
     form.append('from', this.from);
@@ -29,17 +33,13 @@ class MailGun extends MailProvider {
       form.append('to', email);
     });
 
-    if (this.ccs) {
-      this.ccs.forEach((email) => {
-        form.append('cc', email);
-      });
-    }
+    this.ccs.forEach((email) => {
+      form.append('cc', email);
+    });
 
-    if (this.bccs) {
-      this.bccs.forEach((email) => {
-        form.append('bcc', email);
-      });
-    }
+    this.bccs.forEach((email) => {
+      form.append('bcc', email);
+    });
 
     const response = await axiosInstance.post('/messages', form, { headers: form.getHeaders() });
 
@@ -50,7 +50,7 @@ class MailGun extends MailProvider {
     // that status queued is for status 200 and axios will throw other non 2XX responses
     // however, we need to do something in case response status is 2XX other than 200
     // we should consider this as error since email will not be sent
-    throw new Error('MailGun Error: 2XX is return but not 200.');
+    throw new Error(ERRORS.NON_200_RESPONSE);
   }
 }
 

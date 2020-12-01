@@ -1,6 +1,6 @@
 const Boom = require('@hapi/boom');
 
-const { SEND_QUEUED_STATUS } = require('../../constants');
+const { SEND_QUEUED_STATUS, ERRORS } = require('../../constants');
 
 const handlers = {
   async sendEmail(request, h) {
@@ -27,6 +27,10 @@ const handlers = {
         successfulProvider = MailProvider;
         break;
       } catch (error) {
+        if (error.message === ERRORS.RECIPIENT_LIMIT) {
+          throw Boom.badRequest(ERRORS.RECIPIENT_LIMIT);
+        }
+
         request.logger.error('Error posting request to Mail Provider');
         request.logger.error(error);
       }

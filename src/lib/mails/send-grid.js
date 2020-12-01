@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const MailProvider = require('./mail-provider');
-const { HTTP_ACCEPTED_CODE } = require('../../constants');
+const { HTTP_ACCEPTED_CODE, ERRORS } = require('../../constants');
 
 const { SENDGRID_API_KEY, SENDGRID_API_BASE_URL } = process.env;
 
@@ -15,9 +15,13 @@ const axiosInstance = axios.create({
 
 class SendGrid extends MailProvider {
   async send() {
+    if (!this.isTotalRecipientsAllowed) {
+      throw new Error(ERRORS.RECIPIENT_LIMIT);
+    }
+
     const to = this.tos.map((email) => ({ email }));
-    const cc = this.ccs && this.ccs.map((email) => ({ email }));
-    const bcc = this.bccs && this.bccs.map((email) => ({ email }));
+    const cc = this.ccs.map((email) => ({ email }));
+    const bcc = this.bccs.map((email) => ({ email }));
 
     const response = await axiosInstance.post('/v3/mail/send', {
       personalizations: [
@@ -44,7 +48,7 @@ class SendGrid extends MailProvider {
 
     // SendGrid may return 200 OK for valid message but not queued (which is only possible
     // in Sandbox mode) - in this case we consider that email is not going to be delivered
-    throw new Error('SandGrid Error: Email is valid but not queued (Sandbox mode).');
+    throw new Error(ERRORS.EMAIL_NOT_QUEUED);
   }
 }
 
