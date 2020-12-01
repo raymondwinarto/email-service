@@ -31,7 +31,7 @@ const handlers = {
           throw Boom.badRequest(ERRORS.RECIPIENT_LIMIT);
         }
 
-        request.logger.error('Error posting request to Mail Provider');
+        request.logger.error(ERRORS.POSTING_REQUEST);
         request.logger.error(error);
       }
     }
@@ -43,7 +43,7 @@ const handlers = {
       // - or config error such as invalid API_KEY
       // however, we don't want to expose the error details to the API
       // consumer - have logged the error in the above catch block
-      throw Boom.serverUnavailable('Mail Provider Service Unavailable');
+      throw Boom.serverUnavailable(ERRORS.MAIL_PROVIDER_UNAVAILABLE);
     }
 
     // We use the order of item in the MailProviders array to determine
