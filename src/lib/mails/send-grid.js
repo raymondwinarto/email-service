@@ -20,17 +20,18 @@ class SendGrid extends MailProvider {
     }
 
     const to = this.tos.map((email) => ({ email }));
-    const cc = this.ccs.map((email) => ({ email }));
-    const bcc = this.bccs.map((email) => ({ email }));
+    const cc = this.ccs.length && this.ccs.map((email) => ({ email }));
+    const bcc = this.bccs.length && this.bccs.map((email) => ({ email }));
+
+    // "cc" and "bcc" must contain valid email address array, otherwise, don't include
+    const personalisation = {
+      to,
+      cc: cc || null,
+      bcc: bcc || null,
+    };
 
     const response = await axiosInstance.post('/v3/mail/send', {
-      personalizations: [
-        {
-          to,
-          cc,
-          bcc,
-        },
-      ],
+      personalizations: [personalisation],
       from: {
         email: this.from,
       },
