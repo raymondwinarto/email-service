@@ -19,7 +19,7 @@ const axiosInstance = axios.create({
 
 class MailGun extends MailProvider {
   async send() {
-    if (!this.isTotalRecipientsAllowed) {
+    if (!this.isTotalRecipientsAllowed()) {
       throw new Error(ERRORS.RECIPIENT_LIMIT);
     }
 

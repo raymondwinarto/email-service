@@ -13,7 +13,7 @@ class MailProvider {
 
   isTotalRecipientsAllowed() {
     // Both MailGun and SendGrid have limit of 1000 recipients
-    return this.tos.length + this.ccs.length + this.bccs.length < MAX_RECIPIENTS;
+    return this.tos.length + this.ccs.length + this.bccs.length < MAX_RECIPIENTS + 1;
   }
 }
 
