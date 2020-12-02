@@ -171,3 +171,11 @@ HapiJs has built in security features that are enabled on this project https://h
 - `xss` - controls the 'X-XSS-PROTECTION' header - default: `'1; mode=block'`
 - `noSniff` - control the 'X-Content-Type-Options' header - default: `'nosniff'`
 - and some more
+
+## Logging
+
+- On **dev** environment the log output will look like below (formatted, easy to read, and contain correlation id e.g. request.id for easy tracing).
+  ![Dev Log Sample](assets/dev-log-sample.png)
+
+- On **prod** environment the log output will not be easily read but is easily parsed by log analysis tool like Splunk, NewRelic, Cloudwatch, etc.
+  ![Prod Log Sample](assets/prod-log-sample.png)
