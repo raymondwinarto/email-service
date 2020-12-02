@@ -161,6 +161,7 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 - Add Authentication
 - Rather than just return with error if we cannot send the email from both providers due to both being unavailable - we can put it in some sort of queue to retry again later
 - Handle timeouts - we use axios default timeout which is set to 0 - which means we can wait as long as the provider server allowed. Consideration: if we want to terminate the request, we need to make sure we can cancel it, otherwise, the logic will carry on to the next provider and email may end up being sent twice.
+- Add `husky` pre-commit hook that run `lint-staged` and `unit tests` - to prevent developer to commit badly formatted codes or codes with failing unit tests.
 
 ## Security
 
