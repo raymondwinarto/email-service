@@ -35,7 +35,6 @@ module.exports = new Confidence.Store({
         plugin: {
           $filter: { $env: 'NODE_ENV' },
           $default: 'hapi-pino',
-          test: Toys.noop,
         },
         options: {
           $filter: { $env: 'NODE_ENV' },
@@ -49,6 +48,13 @@ module.exports = new Confidence.Store({
           },
           dev: {
             prettyPrint: { colorize: true, translateTime: true },
+          },
+          test: {
+            // cannot seem to disable loggin for test environment at the moment,
+            // just minimise the logging as much as we can for test environment
+            logPayload: false,
+            logRequestStart: false,
+            logRequestComplete: false,
           },
         },
       },

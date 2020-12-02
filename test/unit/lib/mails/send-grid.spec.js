@@ -3,8 +3,8 @@ const axios = require('axios');
 jest.mock('axios');
 const mockAxiosPost = jest.fn();
 
-// we need to mock before requiring mail-gun.js because axios.create
-// is used as soon as we require mail-gun.js
+// we need to mock before requiring send-grid.js because axios.create
+// is used as soon as we require send-grid.js
 axios.create.mockImplementation(() => {
   return { post: mockAxiosPost };
 });
