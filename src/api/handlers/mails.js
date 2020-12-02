@@ -4,7 +4,7 @@ const { SEND_QUEUED_STATUS, HTTP_ACCEPTED_CODE, ERRORS } = require('../../consta
 
 const handlers = {
   async sendEmail(request, h) {
-    const { payload, server } = request;
+    const { payload, server, logger } = request;
     const { MailProviders } = server;
 
     let response;
@@ -20,7 +20,7 @@ const handlers = {
     // eslint-disable-next-line no-restricted-syntax
     for (const MailProvider of MailProviders) {
       try {
-        const mailProvider = new MailProvider(payload, request.logger);
+        const mailProvider = new MailProvider(payload, logger);
 
         // eslint-disable-next-line no-await-in-loop
         response = await mailProvider.send();
@@ -31,8 +31,8 @@ const handlers = {
           throw Boom.badRequest(ERRORS.RECIPIENT_LIMIT);
         }
 
-        request.logger.error(ERRORS.POSTING_REQUEST);
-        request.logger.error(error);
+        logger.error(ERRORS.POSTING_REQUEST);
+        logger.error(error);
       }
     }
 
@@ -51,7 +51,7 @@ const handlers = {
     // mail provider first in the array for the next request
     request.server.MailProviders = [
       successfulProvider,
-      MailProviders.filter((mailProvider) => mailProvider !== successfulProvider),
+      ...MailProviders.filter((mailProvider) => mailProvider !== successfulProvider),
     ];
 
     return h.response({ status: SEND_QUEUED_STATUS }).code(HTTP_ACCEPTED_CODE);
