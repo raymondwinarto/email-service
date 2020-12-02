@@ -83,7 +83,34 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 
 ## Dependencies
 
-## Project Directory
+## Project Directory Structure
+
+```
+|-- .vscode
+    |-- launch.json             # vscode debug configuration for this project
+    |-- settings.json           # vscode workspace settings - currently only forcing to format onSave but will require some plugins to be installed (e.g. Prettier, ESLint)
+|-- assets                      # folder to store static files such as images
+|-- src                         # root source code directory
+    |-- api                     # hapiJs plugin containing the api routes and handler
+        |-- handlers            # handlers grouped by route/path
+        |-- routes              # hapiJs route configuration including request and response validations as well as swagger metadata
+    |-- lib                     # directory containing custom classes, modules or functions
+        |-- mails               # grouping of mail provider classes
+        |-- utils               # collections of shared/utility functions
+    |-- constants.js            # any constant values used in multiple places include list of custom ERROR messages
+    |-- manifest.js             # hapiJs server configuration (including plugins being used)
+|-- test                        # the root directory for all jest tests
+    |-- integration             # directory containing smoke tests to test the hapiJs server route (end-to-end except external API calls are mocked) - the ideas is to make sure the codes are working on hapiJs framework - not just in unit individually
+    |-- unit                    # directory containing individual file unit tests
+    |-- .env.test               # is mock environment variables to be use in testing - no real values - so it is safe for this file to be committed in git
+|-- .env                        # the actual environment variables needed to run the application (not committed to git but sample can be found in the "Install and Run Locally" section above.)
+|-- .eslint.rc                  # our eslint config file airbnb-base with prettier is used
+|-- .gitignore                  # list of file/directory pattern to be ignored by git
+|-- .prettierrc.js              # prettier configuration
+|-- jest.config.js              # jest config file including which files to be included in coverage and to execute setupFiles on each test execution
+|-- package.json                # the pacakage configuration
+|-- Procfile                    # specifies the commands that are executed by Heroku app on startup
+```
 
 ## NPM Scripts
 
