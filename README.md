@@ -81,6 +81,29 @@ npm run deploy:heroku
 Current test coverage is **100%** of Statements and Branches over **8 Test Suites 57 Tests**
 ![Test Coverage](assets/test-coverage.png)
 
+## Dependencies
+
+## Project Directory
+
+## NPM Scripts
+
+| **Script**    | **Description**                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------------------- |
+| test          | Runs tests against local code                                                                           |
+| start         | Starts local environment in prod version                                                                |
+| dev           | Starts local environment for development (server auto restart on code change and debugger is available) |
+| deploy:heroku | Deploy last commit to master to heroku                                                                  |
+| eslint        | Runs eslint and gets a list of linting errors                                                           |
+| eslint:fix    | Runs eslint and fix lint error with best-effort                                                         |
+
+## Feature TODOs
+
+- Support HTML email
+- Sanitise payload to improve security
+- Add Authentication
+- Rather than just return with error if we cannot send the email from both providers due to both being unavailable - we can put it in some sort of queue to retry again later
+- Handle timeouts - we use axios default timeout which is set to 0 - which means we can wait as long as the provider server allowed. Consideration: if we want to terminate the request, we need to make sure we can cancel it, otherwise, the logic will carry on to the next provider and email may end up being sent twice.
+
 ## Security
 
 HapiJs has built in security features that are enabled on this project https://hapi.dev/api/?v=20.0.3#-routeoptionssecurity - following are some that they cover:
