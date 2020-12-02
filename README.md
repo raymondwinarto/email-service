@@ -76,6 +76,11 @@ This Email Service provides an abstraction layer to send email between two diffe
 npm run deploy:heroku
 ```
 
+## Test Coverage
+
+Current test coverage is **100%** of Statements and Branches over **8 Test Suites 57 Tests**
+![Test Coverage](assets/test-coverage.png)
+
 ## Security
 
 HapiJs has built in security features that are enabled on this project https://hapi.dev/api/?v=20.0.3#-routeoptionssecurity - following are some that they cover:
