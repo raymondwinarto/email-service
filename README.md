@@ -100,6 +100,20 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 | joi          | JSON schema validation library that is part of hapiJs ecosystem                                                                                                                                                            |
 | toys         | Toys is a collection of utilities made to reduce common boilerplate in hapiJs project                                                                                                                                      |
 
+### Development
+
+| Name                      | Description/Usage                                                                                                      |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| dotenv                    | Package to load environment variables from a `.env` file into `process.env`                                            |
+| eslint                    | Tool to identify and report on writting pattern in Javascript codes.                                                   |
+| eslint-config-airbnb-base | Airbnb base eslint configuration                                                                                       |
+| eslint-config-prettier    | Prettier eslint configuration                                                                                          |
+| eslint-plugin-import      | Eslint plugin to support linting of ES6+ import/export syntax - required dependency for airbnb base                    |
+| eslint-plugin-prettier    | Eslint plugin for prettier                                                                                             |
+| jest                      | Javascript testing framework used for this project                                                                     |
+| nodemon                   | Utility that will monitor for any changes in your source and automatically restart your server - for local development |
+| prettier                  | The actually prettier tool                                                                                             |
+
 ## Project Directory Structure
 
 ```
