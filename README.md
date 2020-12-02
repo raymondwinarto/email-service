@@ -83,6 +83,23 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 
 ## Dependencies
 
+### Production
+
+| Name         | Description/Usage                                                                                                                                                                                                          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| @hapi/boom   | HTTP-friendly error object package which is part of hapiJs ecosystem                                                                                                                                                       |
+| @hapi/glue   | Server composer for hapiJs project - provides configuration based composition of hapiJs server object                                                                                                                      |
+| @hapi/hapi   | Simple, secure framework providing powerful, scalable application with minimal overhead and out-of the box functionalities                                                                                                 |
+| @hapi/inert  | Static file/directory plugin for hapiJs - this is required by hapi-swagger plugin                                                                                                                                          |
+| @hapi/vision | Template rendering support for hapiJs - this is also required by hapi-swagger                                                                                                                                              |
+| axios        | Promise based HTTP client                                                                                                                                                                                                  |
+| confidence   | Configuration document format to extend JSON-based configuration which is used in conjunction with @hapi/glue for the server configuration to provide support for configuring different options for different environments |
+| form-data    | A library to create readable "multipart/form-data" stream which is used in conjunction with axios to send request to MailGun API                                                                                           |
+| hapi-pino    | HapiJs plugin for Pino logger. Logging in JSON for easy post-processing                                                                                                                                                    |
+| hapi-swagger | OpenAPI (or Swagger) plugin for HapiJs providing self documentation of the API interface                                                                                                                                   |
+| joi          | JSON schema validation library that is part of hapiJs ecosystem                                                                                                                                                            |
+| toys         | Toys is a collection of utilities made to reduce common boilerplate in hapiJs project                                                                                                                                      |
+
 ## Project Directory Structure
 
 ```
@@ -114,7 +131,7 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 
 ## NPM Scripts
 
-| **Script**    | **Description**                                                                                         |
+| Script        | Description                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------------------------- |
 | test          | Runs tests against local code                                                                           |
 | start         | Starts local environment in prod version                                                                |
