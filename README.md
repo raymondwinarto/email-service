@@ -179,3 +179,8 @@ HapiJs has built in security features that are enabled on this project https://h
 
 - On **prod** environment the log output will not be easily read but is easily parsed by log analysis tool like Splunk, NewRelic, Cloudwatch, etc.
   ![Prod Log Sample](assets/prod-log-sample.png)
+
+## Swagger
+
+Swagger is available from `/document` route e.g. https://shielded-thicket-89980.herokuapp.com/documentation as you can see below. It contains sample request payload and models structure.
+![Swagger](assets/swagger.png)
