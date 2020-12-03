@@ -32,7 +32,7 @@ This Email Service provides an abstraction layer to send email between two diffe
 - Endpoint: https://shielded-thicket-89980.herokuapp.com/mails
 - Documentation: https://shielded-thicket-89980.herokuapp.com/documentation
 - Environment level: `staging`
-- The API can be tested directly via Swagger.
+- The API can be tested directly via Swagger (Note: make sure your JSON payload is parsable - e.g. no dangling comma, no non closing double quotes, etc - if not Swagger will not even send the request - based on my testing)
 - or use the following sample curl that can be imported into Postman
   ```
   curl -X POST "https://shielded-thicket-89980.herokuapp.com/mails" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{ \"tos\": [ \"email1@example.com\" ], \"subject\": \"RE: Your Loan Application\", \"content\": \"Dear Sir, Your loan is conditionally approved. Regards, John Smith\"}"
