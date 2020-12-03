@@ -85,7 +85,7 @@ This Email Service provides an abstraction layer to send email between two diffe
   heroku config:set MAILGUN_API_KEY=<your-mailgun-api-key>
   ```
 - To check `heroku` environment variables run `heroku config`
-- `PORT` environment variable doest not need to be set on heroku because according to Heroku documentation "The port to bind to is assigned by Heroku as the `PORT` environment variable"
+- `PORT` environment variable does not need to be set on Heroku config because their documentation says "The port to bind to is assigned by Heroku as the `PORT` environment variable"
 
 ### Deploying to Heroku
 
