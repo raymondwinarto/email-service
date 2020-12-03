@@ -1,5 +1,21 @@
 # Email Service
 
+## Table of Contents
+
+1. [About](#about)
+1. [Service Features and Limitation](#service-features-and-limitations)
+1. [Heroku App](#heroku-app)
+1. [Install and Run Locally](#install-and-run-locally)
+1. [Deployment to Heroku](#deployment-to-heroku)
+1. [Testing](#testing)
+1. [Dependencies](#dependencies)
+1. [Project Directory Structure](#project-directory-structure)
+1. [NPM Scripts](#npm-scripts)
+1. [TODOs](#todos)
+1. [Security](#security)
+1. [Logging](#logging)
+1. [API Documentation](#api-documentation)
+
 ## About
 
 This Email Service provides an abstraction layer to send email between two different email service providers (SendGrid and MailGun). When the current active provider goes down, this Email Service will quickly failover to the second provider.
@@ -118,7 +134,7 @@ npm run deploy:heroku
 
 ## Project Directory Structure
 
-The project structure is impired by [the 12 factors app design](https://12factor.net/) as much as possible (obviously not everything is implemented due to time and environment constraints)
+The project structure is impired by [The 12-factor App design](https://12factor.net/) as much as possible (obviously not everything is implemented due to time and environment constraints)
 
 ```
 |-- .vscode
@@ -188,7 +204,7 @@ HapiJs has built in security features that are enabled on this project https://h
 - On **prod** environment the log output will not be easily read but is easily parsed by log analysis tool like Splunk, NewRelic, Cloudwatch, etc.
   ![Prod Log Sample](assets/prod-log-sample.png)
 
-## Swagger
+## API Documentation
 
 Swagger is available from `/document` route e.g. https://shielded-thicket-89980.herokuapp.com/documentation as you can see below. It contains sample request payload and models structure.
 ![Swagger](assets/swagger.png)
