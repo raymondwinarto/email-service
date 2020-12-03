@@ -76,10 +76,12 @@ This Email Service provides an abstraction layer to send email between two diffe
 npm run deploy:heroku
 ```
 
-## Test Coverage
+## Testing
 
-Current test coverage is **100%** of Statements and Branches over **8 Test Suites 57 Tests**
-![Test Coverage](assets/test-coverage.png)
+- The project currently has two types of tests - unit tests and integration tests. The test strategy is following the test pyramid where we have many lower level test which provide very granular test (e.g. unit tests) and less high level tests such as integration, regression, UI tests).
+- The next level testing would be end-to-end tests using tools such as Cypress (this test is not yet included in this project).
+- Current test coverage is **100%** of Statements and Branches over **8 Test Suites and 57 Test Cases**
+  ![Test Coverage](assets/test-coverage.png)
 
 ## Dependencies
 
@@ -115,6 +117,8 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 | prettier                  | The actually prettier tool                                                                                             |
 
 ## Project Directory Structure
+
+The project structure is impired by [the 12 factors app design](https://12factor.net/) as much as possible (obviously not everything is implemented due to time and environment constraints)
 
 ```
 |-- .vscode
@@ -154,7 +158,7 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 | eslint        | Runs eslint and gets a list of linting errors                                                           |
 | eslint:fix    | Runs eslint and fix lint error with best-effort                                                         |
 
-## Feature TODOs
+## TODOs
 
 - Support HTML email
 - Sanitise payload to improve security
@@ -162,6 +166,9 @@ Current test coverage is **100%** of Statements and Branches over **8 Test Suite
 - Rather than just return with error if we cannot send the email from both providers due to both being unavailable - we can put it in some sort of queue to retry again later
 - Handle timeouts - we use axios default timeout which is set to 0 - which means we can wait as long as the provider server allowed. Consideration: if we want to terminate the request, we need to make sure we can cancel it, otherwise, the logic will carry on to the next provider and email may end up being sent twice.
 - Add `husky` pre-commit hook that run `lint-staged` and `unit tests` - to prevent developer to commit badly formatted codes or codes with failing unit tests.
+- Add End-to-end testing using tools such as Cypress.
+- Setup deployment pipeline (build - test - deploy - promote to higher environment) which executes different deployment scripts (such as bash script) stored in this repo.
+- As part of the deployment pipeline we can also add a step to scan our code for security using tools such as Checkmarx or Fortify on Demand.
 
 ## Security
 
