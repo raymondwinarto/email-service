@@ -20,6 +20,29 @@
 
 This Email Service provides an abstraction layer to send email between two different email service providers (SendGrid and MailGun). When the current active provider goes down, this Email Service will quickly failover to the second provider.
 
+### Problem
+
+Create a service that accepts the necessary information and sends emails. The application should provide an abstraction between two different email service providers. If one of the services goes down, your service can quickly failover to a different provider without affecting your customers.
+
+Email Providers:
+
+- Mailgun
+- SendGrid
+
+Above services are free to try. You may choose alternative email providers that have API integration.
+Your solution should cater for multiple email recipients, CCs and BCCs but there is no need to support
+HTML email body types (plain text is OK)
+
+The solution should be implemented as one or more RESTful API calls (see technology constraints
+below).
+
+- No authentication is required for the scope of this exercise
+- No 3rd party client library should be used to integrate with Mailgun, Sendgrid or other providers. A simple HTTP client of choice can be used to handcraft HTTP requests to the email gateway services.
+
+### Scope
+
+Non-crucial features can be left unimplemented and listed in the TODO section of the readme file.
+
 ## Service Features and Limitations
 
 - Support multiple email recipients, CCs, and/or BCCs.
